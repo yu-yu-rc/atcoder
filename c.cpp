@@ -1,37 +1,49 @@
-#include <iostream>
+//コンパイラ最適化用
+#pragma GCC optimize("O3")
+//インクルード(アルファベット順)
+#include<algorithm>//sort,二分探索,など
+#include<bitset>//固定長bit集合
+#include<cmath>//pow,logなど
+#include<complex>//複素数
+#include<deque>//両端アクセスのキュー
+#include<functional>//sortのgreater
+#include<iomanip>//setprecision(浮動小数点の出力の誤差)
+#include<iostream>//入出力
+#include<iterator>//集合演算(積集合,和集合,差集合など)
+#include<map>//map(辞書)
+#include<numeric>//iota(整数列の生成),gcdとlcm(c++17)
+#include<queue>//キュー
+#include<set>//集合
+#include<stack>//スタック
+#include<string>//文字列
+#include<unordered_map>//イテレータあるけど順序保持しないmap
+#include<unordered_set>//イテレータあるけど順序保持しないset
+#include<utility>//pair
+#include<vector>//可変長配列
+
 using namespace std;
+typedef long long ll;
 
-const int MOD = 1000000007;
+//定数
+#define INF 1000000000000 //10^12:極めて大きい値,∞
+#define MOD 1000000007 //10^9+7:合同式の法
+#define MAXR 100000 //10^5:配列の最大のrange(素数列挙などで使用)
 
-long long fac[MAX], finv[MAX], inv[MAX];
-
-// テーブルを作る前処理
-void COMinit() {
-    fac[0] = fac[1] = 1;
-    finv[0] = finv[1] = 1;
-    inv[1] = 1;
-    for (int i = 2; i < MAX; i++){
-        fac[i] = fac[i - 1] * i % MOD;
-        inv[i] = MOD - inv[MOD%i] * (MOD / i) % MOD;
-        finv[i] = finv[i - 1] * inv[i] % MOD;
-    }
-}
-
-// 二項係数計算
-long long COM(int n, int k){
-    if (n < k) return 0;
-    if (n < 0 || k < 0) return 0;
-    return fac[n] * (finv[k] * finv[n - k] % MOD) % MOD;
-}
-
-int main() {
-    // 前処理
-    COMinit();
-int n;
+signed main(){
+  int n;
   cin >> n;
-  for(int i = 0; i < n; i++)  cin >> fac[i];
-    
-    // 計算例
-    cout << COM(n, 2) << endl;
+  unsigned long long a[n];
+  unsigned long long ans = 0;
+  for(int i = 0; i < n; i++)  cin >> a[i];
+
+  for(int i = 0; i < n-1; i++){
+    for(int j = i+1; j < n; j++){
+      ans += (a[i] * a[j]) % MOD;
+      }
+  }
+  ans =  ans % MOD;
+
+  cout << ans;
+
 }
 
